@@ -52,6 +52,10 @@ function chartOption(day, mobile) {
   const timeAxis = () => ({
     type: 'time', min: day.winStartMs, max: day.winEndMs,
     inverse: mobile, // vertical: earliest (day) at top, latest (night) at bottom
+    name: 'Time of day (h)',
+    nameLocation: 'middle',
+    nameGap: mobile ? 32 : 26,
+    nameTextStyle: { color: '#9fb0c8', fontSize: 10 },
     axisLabel: { color: '#7f8fab', fontSize: 9, formatter: (v) => echarts.time.format(v, '{HH}', false) },
     axisLine: { lineStyle: { color: '#2b3a58' } },
     axisTick: { show: false },
@@ -98,8 +102,8 @@ function chartOption(day, mobile) {
   return {
     animation: false,
     grid: {
-      left: mobile ? 38 : 34, right: mobile ? 38 : 34,
-      top: mobile ? 46 : 22, bottom: mobile ? 46 : 20,
+      left: mobile ? 54 : 34, right: mobile ? 38 : 34,
+      top: mobile ? 46 : 22, bottom: mobile ? 46 : 40,
       show: true, backgroundColor: skyGradient, borderWidth: 0,
     },
     legend,
