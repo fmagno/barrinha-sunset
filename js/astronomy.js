@@ -17,11 +17,12 @@ const isDate = (d) => d instanceof Date && !isNaN(d);
 // Emoji for the 8 lunar phases, in cycle order (new → waxing → full → waning).
 const MOON_ICONS = ['🌑', '🌒', '🌓', '🌔', '🌕', '🌖', '🌗', '🌘'];
 
-// Map SunCalc's illumination phase (0..1) to one of the 8 icons. round(phase*8)%8
-// lands 0→🌑 new, 0.25→🌓 first quarter, 0.5→🌕 full, 0.75→🌗 last quarter.
-function moonIconFor(date) {
-  const phase = SunCalc.getMoonIllumination(date).phase;
-  return MOON_ICONS[Math.round(phase * 8) % 8];
+// Moon illumination for a date → { icon, fraction }. icon is the phase emoji
+// (round(phase*8)%8: 0→🌑 new, 0.25→🌓 first qtr, 0.5→🌕 full, 0.75→🌗 last qtr);
+// fraction is the illuminated portion (0 new … 1 full).
+function moonInfoFor(date) {
+  const { phase, fraction } = SunCalc.getMoonIllumination(date);
+  return { icon: MOON_ICONS[Math.round(phase * 8) % 8], fraction };
 }
 
 // Returns { sunset: Date|null, moonrise: Date|null, gapMin: number|null }.
@@ -48,5 +49,6 @@ export function astronomyFor(dateStr) {
       Math.abs(r - sunset) < Math.abs(best - sunset) ? r : best);
     gapMin = Math.abs(moonrise.getTime() - sunset.getTime()) / 60000;
   }
-  return { sunset, moonrise, gapMin, moonIcon: moonIconFor(base) };
+  const moon = moonInfoFor(base);
+  return { sunset, moonrise, gapMin, moonIcon: moon.icon, moonFraction: moon.fraction };
 }

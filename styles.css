@@ -109,7 +109,8 @@ body {
   padding-top: .5rem;
   border-top: 1px solid #24365a;
 }
-.card__caption .water { color: var(--text); }
+.card__caption .water,
+.card__caption .weather { color: var(--text); }
 .card__caption b { color: var(--text); font-weight: 600; }
 
 .factors { display: grid; gap: .5rem; }

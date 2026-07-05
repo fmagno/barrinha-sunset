@@ -65,11 +65,15 @@ async function fetchTide() {
   return lows;
 }
 
-// Open-Meteo forecast → [{ date, windMaxKmh }]
+// Open-Meteo forecast → [{ date, windMaxKmh, weatherCode }]
 async function fetchWind() {
   const d = await getJSON(ENDPOINTS.openMeteoWind);
-  const { time, wind_speed_10m_max } = d.daily;
-  return time.map((date, i) => ({ date, windMaxKmh: wind_speed_10m_max[i] }));
+  const { time, wind_speed_10m_max, weather_code } = d.daily;
+  return time.map((date, i) => ({
+    date,
+    windMaxKmh: wind_speed_10m_max[i],
+    weatherCode: weather_code[i],
+  }));
 }
 
 // Open-Meteo hourly → { t: [epoch-ms…], temp: [°C…], wind: [km/h…] } for the chart.

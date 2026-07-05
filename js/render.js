@@ -35,7 +35,7 @@ function chartOption(day, mobile) {
   const valueDim = mobile ? 0 : 1; // which data dimension holds the value
 
   const markData = [
-    marker(day.astro.sunset, '☀', mobile),
+    marker(day.astro.sunset, '☀️', mobile),
     marker(day.lowTide, '🌊', mobile),
     marker(day.astro.moonrise, day.astro.moonIcon, mobile),
   ].filter(Boolean);
@@ -161,8 +161,9 @@ function cardHtml(day, score, idx) {
       </header>
       <div class="card__chart" id="chart-${idx}"></div>
       <div class="card__caption">
+        <span class="weather">${day.weatherIcon} ${day.weatherLabel}</span>
         <span class="water">🌡️ Water <b>${water}</b></span>
-        <span>☀ ${fmtTime(day.astro.sunset)}</span>
+        <span>☀️ ${fmtTime(day.astro.sunset)}</span>
         <span>🌊 ${fmtTime(day.lowTide)}</span>
         <span>${day.astro.moonIcon} ${fmtTime(day.astro.moonrise)}</span>
       </div>

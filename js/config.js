@@ -22,7 +22,7 @@ export const ENDPOINTS = {
     `&hourly=sea_level_height_msl&timeformat=unixtime&timezone=${encodeURIComponent(LOCATION.timezone)}`,
   openMeteoWind:
     `https://api.open-meteo.com/v1/forecast?latitude=${LOCATION.lat}&longitude=${LOCATION.lon}` +
-    `&daily=wind_speed_10m_max,wind_direction_10m_dominant&timezone=${encodeURIComponent(LOCATION.timezone)}`,
+    `&daily=weather_code,wind_speed_10m_max,wind_direction_10m_dominant&timezone=${encodeURIComponent(LOCATION.timezone)}`,
   // Hourly air temp + wind for the per-day timeline chart (unixtime = UTC epochs).
   openMeteoHourly:
     `https://api.open-meteo.com/v1/forecast?latitude=${LOCATION.lat}&longitude=${LOCATION.lon}` +
@@ -59,7 +59,28 @@ export const BANDS = {
       { maxMin: Infinity, stars: 1 }, // > 4h
     ],
   },
+  // Moon fullness = illuminated fraction (0 new … 1 full). Full moon is best.
+  moonFullness: { at0: 0, at1: 1 },
+  // Weather: pre-computed [0,1] score (see weatherInfo) — identity band. Clear
+  // sky (sun/moon visible) scores high; rain/snow/overcast blocking it scores low.
+  weather: { at0: 0, at1: 1 },
 };
+
+// WMO weather_code (Open-Meteo) → display icon + [0,1] score + label.
+// Clear skies let you see the sunset/moonrise (best); precipitation or a blocked
+// sky (overcast/fog/rain/snow/storm) scores low.
+export function weatherInfo(code) {
+  if (code === 0) return { icon: '☀️', score: 1.0, label: 'Clear' };
+  if (code === 1) return { icon: '🌤️', score: 0.85, label: 'Mainly clear' };
+  if (code === 2) return { icon: '⛅', score: 0.6, label: 'Partly cloudy' };
+  if (code === 3) return { icon: '☁️', score: 0.35, label: 'Overcast' };
+  if (code === 45 || code === 48) return { icon: '🌫️', score: 0.25, label: 'Fog' };
+  if (code >= 51 && code <= 57) return { icon: '🌦️', score: 0.25, label: 'Drizzle' };
+  if ((code >= 61 && code <= 67) || (code >= 80 && code <= 82)) return { icon: '🌧️', score: 0.1, label: 'Rain' };
+  if ((code >= 71 && code <= 77) || code === 85 || code === 86) return { icon: '🌨️', score: 0.1, label: 'Snow' };
+  if (code >= 95) return { icon: '⛈️', score: 0.0, label: 'Thunderstorm' };
+  return { icon: '❓', score: 0.5, label: '—' };
+}
 
 // Equal weights across all factors. Tune freely; only ratios matter.
 export const WEIGHTS = {
@@ -68,10 +89,12 @@ export const WEIGHTS = {
   waterTemp: 1,
   wind: 1,
   sunMoonGap: 1,
+  moonFullness: 1,
+  weather: 1,
 };
 
 export const CACHE = {
-  key: 'barrinha-experience-cache-v3', // v3: added hourly temp/wind series
+  key: 'barrinha-experience-cache-v4', // v4: added daily weather_code
   ttlMs: 6 * 60 * 60 * 1000, // 6 hours
 };
 

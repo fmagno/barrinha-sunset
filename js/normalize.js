@@ -1,6 +1,6 @@
 // Normalize/merge layer: align all sources by forecast date into per-day records.
 import { astronomyFor } from './astronomy.js';
-import { CHART } from './config.js';
+import { CHART, weatherInfo } from './config.js';
 
 function indexByDate(arr) {
   const m = new Map();
@@ -73,6 +73,7 @@ export function mergeSources({ air, water, tide, wind, hourly }) {
     const wd = windM.get(date);
     const astro = astronomyFor(date);
     const { lowTide, gapMin: tideGapMin } = nearestLowTide(astro.sunset, lowTidesMs);
+    const weather = weatherInfo(wd.weatherCode);
 
     // Window is CHART.spanHours wide, centred on sunset (fallback: local 20:00).
     const centerMs =
@@ -91,9 +92,13 @@ export function mergeSources({ air, water, tide, wind, hourly }) {
         waterTemp: (w.sstMin + w.sstMax) / 2,
         wind: wd.windMaxKmh,
         sunMoonGap: astro.gapMin, // may be null
+        moonFullness: astro.moonFraction, // 0 new … 1 full
+        weather: weather.score, // pre-scored [0,1] from weather code
       },
       astro,     // sunset/moonrise Dates for display
       lowTide,   // nearest low-tide Date for display
+      weatherIcon: weather.icon,
+      weatherLabel: weather.label,
       winStartMs,
       winEndMs,
       series: sliceHourly(hourly, winStartMs, winEndMs), // hourly temp/wind for the chart

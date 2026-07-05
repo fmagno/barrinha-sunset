@@ -26,6 +26,8 @@ const RAW_TO_BAND = {
   waterTemp: 'waterTemp',
   wind: 'wind',
   sunMoonGap: 'sunMoonGapMin',
+  moonFullness: 'moonFullness',
+  weather: 'weather',
 };
 
 // Maps raw.<factor> → weight key.
@@ -35,6 +37,8 @@ const RAW_TO_WEIGHT = {
   waterTemp: 'waterTemp',
   wind: 'wind',
   sunMoonGap: 'sunMoonGap',
+  moonFullness: 'moonFullness',
+  weather: 'weather',
 };
 
 export function scoreDay(dayRecord, weights = WEIGHTS) {
