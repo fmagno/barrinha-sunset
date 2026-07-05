@@ -81,19 +81,28 @@ function chartOption(day, mobile) {
   const windAxis = valueAxis(CHART.windRange, mobile ? 'top' : 'right', false);
   const time = timeAxis();
 
+  // Legends sit next to their value axis. Desktop: both at top (temp left / wind
+  // right, matching the left/right axes). Mobile (transposed): temp axis is at the
+  // bottom and wind axis at the top, so the legends move with them.
+  const legBase = { show: true, itemWidth: 12, itemHeight: 6, textStyle: { color: '#9fb0c8', fontSize: 10 } };
+  const legend = mobile
+    ? [
+        { ...legBase, data: ['Air °C'], bottom: 0, left: 'center' },
+        { ...legBase, data: ['Wind km/h'], top: 0, left: 'center' },
+      ]
+    : [
+        { ...legBase, data: ['Air °C'], top: 0, left: 4 },
+        { ...legBase, data: ['Wind km/h'], top: 0, right: 4 },
+      ];
+
   return {
     animation: false,
     grid: {
       left: mobile ? 38 : 34, right: mobile ? 38 : 34,
-      top: mobile ? 44 : 22, bottom: mobile ? 34 : 20,
+      top: mobile ? 46 : 22, bottom: mobile ? 46 : 20,
       show: true, backgroundColor: skyGradient, borderWidth: 0,
     },
-    legend: [
-      { show: true, top: 0, left: 4, itemWidth: 12, itemHeight: 6,
-        textStyle: { color: '#9fb0c8', fontSize: 10 }, data: ['Air °C'] },
-      { show: true, top: 0, right: 4, itemWidth: 12, itemHeight: 6,
-        textStyle: { color: '#9fb0c8', fontSize: 10 }, data: ['Wind km/h'] },
-    ],
+    legend,
     tooltip: {
       trigger: 'axis',
       backgroundColor: '#1d2c49', borderColor: '#2b4270',
