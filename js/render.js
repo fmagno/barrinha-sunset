@@ -142,7 +142,9 @@ function chartOption(day, mobile) {
       {
         name: 'Wind km/h', type: 'line', showSymbol: false, smooth: true,
         xAxisIndex: mobile ? 1 : 0, yAxisIndex: mobile ? 0 : 1,
-        lineStyle: { width: 2, opacity: 0.9 }, data: windData,
+        // Dashed so it's distinguishable from the solid air-temp line regardless
+        // of the value-based colouring the two share.
+        lineStyle: { width: 2, opacity: 0.95, type: 'dashed' }, data: windData,
       },
     ],
   };
