@@ -14,6 +14,16 @@ function noonOf(dateStr) {
 const DAY_MS = 86400000;
 const isDate = (d) => d instanceof Date && !isNaN(d);
 
+// Emoji for the 8 lunar phases, in cycle order (new → waxing → full → waning).
+const MOON_ICONS = ['🌑', '🌒', '🌓', '🌔', '🌕', '🌖', '🌗', '🌘'];
+
+// Map SunCalc's illumination phase (0..1) to one of the 8 icons. round(phase*8)%8
+// lands 0→🌑 new, 0.25→🌓 first quarter, 0.5→🌕 full, 0.75→🌗 last quarter.
+function moonIconFor(date) {
+  const phase = SunCalc.getMoonIllumination(date).phase;
+  return MOON_ICONS[Math.round(phase * 8) % 8];
+}
+
 // Returns { sunset: Date|null, moonrise: Date|null, gapMin: number|null }.
 // The moonrise picked is the one CLOSEST to sunset, searched across the previous,
 // current, and next local day. SunCalc.getMoonTimes only reports events within a
@@ -38,5 +48,5 @@ export function astronomyFor(dateStr) {
       Math.abs(r - sunset) < Math.abs(best - sunset) ? r : best);
     gapMin = Math.abs(moonrise.getTime() - sunset.getTime()) / 60000;
   }
-  return { sunset, moonrise, gapMin };
+  return { sunset, moonrise, gapMin, moonIcon: moonIconFor(base) };
 }

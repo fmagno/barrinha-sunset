@@ -37,7 +37,7 @@ function chartOption(day, mobile) {
   const markData = [
     marker(day.astro.sunset, '☀', mobile),
     marker(day.lowTide, '🌊', mobile),
-    marker(day.astro.moonrise, '🌙', mobile),
+    marker(day.astro.moonrise, day.astro.moonIcon, mobile),
   ].filter(Boolean);
 
   const valueAxis = (range, position, showSplit) => ({
@@ -164,7 +164,7 @@ function cardHtml(day, score, idx) {
         <span class="water">🌡️ Water <b>${water}</b></span>
         <span>☀ ${fmtTime(day.astro.sunset)}</span>
         <span>🌊 ${fmtTime(day.lowTide)}</span>
-        <span>🌙 ${fmtTime(day.astro.moonrise)}</span>
+        <span>${day.astro.moonIcon} ${fmtTime(day.astro.moonrise)}</span>
       </div>
     </article>`;
 }
