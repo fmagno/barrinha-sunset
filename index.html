@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Barrinha Sunset — Faro Activity Scorer</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🌅%3C/text%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-head">
+    <div>
+      <h1>Barrinha Sunset</h1>
+    </div>
+    <button id="refresh" type="button">↻ Refresh</button>
+  </header>
+
+  <section class="intro">
+    <div class="intro__photo">
+      <img src="img/barrinha-channel.jpg" alt="Aerial view of the Barrinha sandbar and the channel across to Ilha Deserta, Ria Formosa" />
+    </div>
+    <div class="intro__text">
+      <h2>The crossing to Ilha Deserta 🏝️</h2>
+      <p>
+        Park near the <b>Ria Formosa access road</b>, cross the <b>footbridge</b> and follow the
+        beach to <b>Barrinha</b> — under an hour on foot. There you wait for the tide and
+        <b>swim across the channel</b> to <b>Ilha Deserta</b>, then swim back.
+        The channel crossing must happen when the tide is at its <b>lowest</b> — that's when the
+        water is shallowest, slowest and safest. Time it for after dark and the channel glows with
+        <b>bioluminescence</b>. 🌊✨
+      </p>
+      <p>
+        Each card below is one upcoming evening. The chart is a <b>12-hour timeline centred on
+        sunset</b> (the background fades day → night in the hour around it). The two lines are
+        <b>air temperature</b> and <b>wind</b>, coloured by intensity; the markers show
+        <b>☀ sunset</b>, the <b>🌊 nearest low tide</b> and <b>🌙 moonrise</b>. Water temperature
+        sits beside the plot. The <b>1–5★</b> rating rewards a low tide close to sunset, warm air
+        and water, calm wind, and a moonrise near sunset — the makings of a good crossing.
+      </p>
+    </div>
+    <div class="intro__map">
+      <iframe title="Barrinha crossing to Ilha Deserta" loading="lazy" allowfullscreen
+        src="https://maps.google.com/maps?q=36.982785,-7.956836&z=15&output=embed"></iframe>
+    </div>
+  </section>
+
+  <main id="app"></main>
+
+  <footer class="site-foot">
+    <p id="status"></p>
+    <p class="credit">Made with <span class="heart">♥</span> by fmagno</p>
+    <a class="bmc" href="https://buymeacoffee.com/ehexncj" target="_blank" rel="noopener noreferrer">☕ Buy me a coffee</a>
+  </footer>
+
+  <!-- Vendored libs must load before the module (expose window.SunCalc / echarts) -->
+  <script src="lib/suncalc.js"></script>
+  <script src="lib/echarts.min.js"></script>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

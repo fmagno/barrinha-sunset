@@ -1,0 +1,160 @@
+:root {
+  --bg: #0e1726;
+  --panel: #16223a;
+  --panel-2: #1d2c49;
+  --text: #e8eef7;
+  --muted: #9fb0c8;
+  --accent: #ffd23f;
+  --radius: 14px;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: radial-gradient(1200px 600px at 70% -10%, #1b3357, var(--bg));
+  color: var(--text);
+  min-height: 100vh;
+  padding: 1.5rem clamp(1rem, 4vw, 3rem) 3rem;
+}
+
+.site-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.site-head h1 { margin: 0; font-size: clamp(1.4rem, 3vw, 2rem); }
+.tagline { margin: .2rem 0 0; color: var(--muted); font-size: .95rem; }
+
+#refresh {
+  background: var(--panel-2);
+  color: var(--text);
+  border: 1px solid #2b4270;
+  border-radius: 999px;
+  padding: .55rem 1.1rem;
+  cursor: pointer;
+  font-size: .9rem;
+  transition: background .15s;
+}
+#refresh:hover { background: #26406e; }
+
+.intro {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  background: var(--panel);
+  border: 1px solid #24365a;
+  border-radius: var(--radius);
+  padding: 1.2rem 1.4rem;
+}
+.intro__photo { flex: 1 1 240px; }
+.intro__photo img {
+  width: 100%; height: 100%; min-height: 340px; max-height: 460px;
+  object-fit: cover; border-radius: 10px; display: block;
+}
+.intro__text { flex: 2 1 340px; }
+.intro__text h2 { margin: .1rem 0 .6rem; font-size: 1.2rem; }
+.intro__text p { margin: .55rem 0; color: var(--muted); line-height: 1.55; font-size: .92rem; }
+.intro__text b { color: var(--text); font-weight: 600; }
+.intro__map { flex: 1 1 440px; min-height: 340px; }
+.intro__map iframe {
+  width: 100%; height: 100%; min-height: 340px;
+  border: 0; border-radius: 10px; display: block;
+}
+
+#app {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr; /* one full-width card per row → widest possible plot */
+}
+
+.card {
+  background: var(--panel);
+  border: 1px solid #24365a;
+  border-radius: var(--radius);
+  padding: 1.1rem 1.2rem 1.3rem;
+  box-shadow: 0 8px 24px rgba(0,0,0,.25);
+}
+.card--stars-5 { border-color: var(--accent); }
+.card--stars-4 { border-color: #7fc98a; }
+
+.card__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: .3rem;
+}
+.card__head h2 { margin: 0; font-size: 1.15rem; }
+.stars { color: var(--accent); font-size: 1.15rem; letter-spacing: 1px; white-space: nowrap; }
+
+.card__astro { color: var(--muted); font-size: .82rem; margin-bottom: .9rem; }
+
+.card__chart { width: 100%; height: 260px; margin: .2rem 0 .4rem; }
+
+/* Mobile: the chart transposes to a vertical timeline — give it height instead. */
+@media (max-width: 640px) {
+  .card__chart { height: 460px; }
+}
+
+.card__caption {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem .9rem;
+  font-size: .82rem;
+  color: var(--muted);
+  padding-top: .5rem;
+  border-top: 1px solid #24365a;
+}
+.card__caption .water { color: var(--text); }
+.card__caption b { color: var(--text); font-weight: 600; }
+
+.factors { display: grid; gap: .5rem; }
+.factor {
+  display: grid;
+  grid-template-columns: 1.3fr .9fr 2fr auto;
+  align-items: center;
+  gap: .5rem;
+  font-size: .82rem;
+}
+.factor__label { color: var(--text); }
+.factor__raw { color: var(--muted); text-align: right; }
+.factor__sub { color: var(--muted); min-width: 2.6rem; text-align: right; }
+
+.bar {
+  height: 8px;
+  background: #24365a;
+  border-radius: 999px;
+  overflow: hidden;
+}
+.bar__fill { height: 100%; border-radius: 999px; transition: width .3s; }
+.bar--na { opacity: .4; }
+
+.loading, .empty, .error {
+  grid-column: 1 / -1;
+  color: var(--muted);
+  padding: 2rem;
+  text-align: center;
+}
+.error { color: #ff9b9b; }
+
+.site-foot { margin-top: 2.5rem; color: var(--muted); font-size: .78rem; text-align: center; }
+.site-foot p { margin: .3rem 0; }
+.site-foot .credit { font-size: .95rem; color: var(--text); margin-top: .6rem; }
+.site-foot .heart { color: #ff5a6e; }
+.bmc {
+  display: inline-block;
+  margin-top: .6rem;
+  padding: .5rem 1rem;
+  background: #ffdd00;
+  color: #14213d;
+  font-weight: 600;
+  font-size: .9rem;
+  text-decoration: none;
+  border-radius: 999px;
+  transition: transform .12s, box-shadow .12s;
+}
+.bmc:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(255, 221, 0, .25); }
