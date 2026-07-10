@@ -29,6 +29,8 @@ body {
 .site-head h1 { margin: 0; font-size: clamp(1.4rem, 3vw, 2rem); }
 .tagline { margin: .2rem 0 0; color: var(--muted); font-size: .95rem; }
 
+.site-head__actions { display: flex; align-items: center; gap: .6rem; }
+
 #refresh {
   background: var(--panel-2);
   color: var(--text);
@@ -40,6 +42,21 @@ body {
   transition: background .15s;
 }
 #refresh:hover { background: #26406e; }
+
+.bmc-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.3rem;
+  height: 2.3rem;
+  background: var(--panel-2);
+  border: 1px solid #2b4270;
+  border-radius: 999px;
+  font-size: 1.05rem;
+  text-decoration: none;
+  transition: background .15s;
+}
+.bmc-icon:hover { background: #26406e; }
 
 .intro {
   display: flex;
@@ -149,10 +166,11 @@ body {
 .bmc {
   display: inline-block;
   margin-top: .5rem;
-  color: var(--muted);
+  color: var(--accent);
   font-size: .78rem;
   text-decoration: none;
   border-bottom: 1px solid transparent;
-  transition: color .12s, border-color .12s;
+  transition: border-color .12s;
 }
-.bmc:hover { color: var(--text); border-color: var(--muted); }
+.bmc:hover, .bmc:visited, .bmc:active { color: var(--accent); }
+.bmc:hover { border-color: var(--accent); }
