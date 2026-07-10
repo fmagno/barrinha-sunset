@@ -146,3 +146,13 @@ body {
 .site-foot p { margin: .3rem 0; }
 .site-foot .credit { font-size: .95rem; color: var(--text); margin-top: .6rem; }
 .site-foot .heart { color: #ff5a6e; }
+.bmc {
+  display: inline-block;
+  margin-top: .5rem;
+  color: var(--muted);
+  font-size: .78rem;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color .12s, border-color .12s;
+}
+.bmc:hover { color: var(--text); border-color: var(--muted); }
